@@ -1,4 +1,6 @@
 import s from './ImageGalleryItem.module.css'
+import PropTypes from 'prop-types';
+
 
 export default function ImageGalleryItem({ webformatURL, tags, largeImageURL, toggleModal}){
     return (
@@ -7,3 +9,11 @@ export default function ImageGalleryItem({ webformatURL, tags, largeImageURL, to
         </li>
       );
 }
+
+ImageGalleryItem.propTypes = {
+    webformatURL: PropTypes.string.isRequired,
+    tags: PropTypes.string.isRequired,
+    largeImageURL: PropTypes.string.isRequired,
+    toggleModal: PropTypes.func.isRequired,
+  }
+  

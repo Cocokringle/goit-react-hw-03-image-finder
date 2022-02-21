@@ -1,6 +1,8 @@
 import ImageGalleryItem from "components/ImageGalleryItem/ImageGalleryItem";
+import PropTypes from 'prop-types';
 import s from './ImageGallery.module.css'
 import Loader from "components/Loader/Loader";
+
 export default function ImageGallery({images,isLoading, toggleModal}) {
     return (
       <>
@@ -19,6 +21,10 @@ export default function ImageGallery({images,isLoading, toggleModal}) {
       </>
 
     )
+}
 
-   
+ImageGallery.propTypes = {
+  images: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  toggleModal: PropTypes.func.isRequired,
 }

@@ -17,7 +17,6 @@ export default class App extends Component {
     isLoading: false,
     showModal: false,
     largeImage: '',
-
   };
 
   getImageName = imageName => {
@@ -72,16 +71,14 @@ export default class App extends Component {
     
   }
   render() {
-
+    const {images, isLoading, showModal, largeImage, imageName} = this.state
     return (
       <div className={s.App}>
         <Searchbar onSubmit={this.getImageName}/>
-        <ImageGallery  toggleModal={this.toggleModal} images={this.state.images} onClickMoreBtn={this.onClickMoreBtn} isLoading={this.state.isLoading}></ImageGallery>
-        {this.state.images.length !== 0 && <LoadMoreButton onClickMoreBtn={this.onClickMoreBtn}/>}
-        {this.showModal && (
-          <Modal isOpen={this.state.showModal}>
-
-          </Modal>
+        <ImageGallery  toggleModal={this.toggleModal} images={images} onClickMoreBtn={this.onClickMoreBtn} isLoading={isLoading}></ImageGallery>
+        {images.length !== 0 && <LoadMoreButton onClickMoreBtn={this.onClickMoreBtn}/>}
+        {showModal && (
+          <Modal image={largeImage} onClose={this.toggleModal} alt={imageName}/>
         )}
       </div>
     );
