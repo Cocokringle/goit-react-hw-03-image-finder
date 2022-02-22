@@ -60,6 +60,7 @@ export default class App extends Component {
         }
         this.setState({
           images: [...this.state.images, ...images.hits],
+          
         });
       })
       .finally(() => {
@@ -76,7 +77,7 @@ export default class App extends Component {
       <div className={s.App}>
         <Searchbar onSubmit={this.getImageName}/>
         <ImageGallery  toggleModal={this.toggleModal} images={images} onClickMoreBtn={this.onClickMoreBtn} isLoading={isLoading}></ImageGallery>
-        {images.length !== 0 && <LoadMoreButton onClickMoreBtn={this.onClickMoreBtn}/>}
+        {images.length >= 12 && <LoadMoreButton onClickMoreBtn={this.onClickMoreBtn}/>}
         {showModal && (
           <Modal image={largeImage} onClose={this.toggleModal} alt={imageName}/>
         )}
