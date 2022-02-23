@@ -17,6 +17,7 @@ export default class App extends Component {
     isLoading: false,
     showModal: false,
     largeImage: '',
+    isVisible: false,
   };
 
   getImageName = imageName => {
@@ -52,15 +53,18 @@ export default class App extends Component {
     if (prevImage !== currentImage || prevState.page!== this.state.page) {
 			this.setState({
 				isLoading: true,
+        isVisible: true,
 			});
 
       api.fetchImages(currentImage, this.state.page).then((images) => {
-        if (images.hits.length === 0) {
-          alert('No photos with this word!');
+        if (images.totalHits - this.state.page * 12 < 12) {
+          this.setState({ isVisible: false });
+        }
+        if (images.totalHits.length === 0) {
+          alert('There are no photos');
         }
         this.setState({
           images: [...this.state.images, ...images.hits],
-          
         });
       })
       .finally(() => {
@@ -72,12 +76,12 @@ export default class App extends Component {
     
   }
   render() {
-    const {images, isLoading, showModal, largeImage, imageName} = this.state
+    const {images, isLoading, showModal, largeImage, imageName, isVisible} = this.state
     return (
       <div className={s.App}>
         <Searchbar onSubmit={this.getImageName}/>
         <ImageGallery  toggleModal={this.toggleModal} images={images} onClickMoreBtn={this.onClickMoreBtn} isLoading={isLoading}></ImageGallery>
-        {images.length >= 12 && <LoadMoreButton onClickMoreBtn={this.onClickMoreBtn}/>}
+        {isVisible && <LoadMoreButton onClickMoreBtn={this.onClickMoreBtn}/>}
         {showModal && (
           <Modal image={largeImage} onClose={this.toggleModal} alt={imageName}/>
         )}
